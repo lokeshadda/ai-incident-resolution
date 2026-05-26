@@ -6,7 +6,7 @@
 | Deliverable | Link |
 |-------------|------|
 | GitHub repository | https://github.com/lokeshadda/ai-incident-resolution |
-| Live system (Streamlit Cloud) | https://YOUR-APP-NAME.streamlit.app *(replace after deploy — see steps below)* |
+| Live system (Streamlit Cloud) | https://ai-incident-resolution-agent.streamlit.app/ |
 
 ---
 
@@ -94,7 +94,7 @@ The system improves through real usage in four ways:
 | API / UI | FastAPI, Streamlit, httpx |
 | Tests | pytest (offline security tests; integration tests with API key) |
 
-**Deployment:** AWS EC2 (us-east-1) via CloudFormation (`deploy/aws/`). FastAPI binds to localhost:8001; Streamlit to localhost:8501; **nginx** serves the public UI on port 80 at http://44.192.117.195. Secrets load from `.env` on the host (not committed).
+**Deployment:** Streamlit Community Cloud (free tier). Entrypoint `streamlit_app.py` runs FastAPI on localhost:8001 and the UI on 8501 in one process. Live demo URL is in the table above. OpenAI key is stored in Streamlit **Secrets** (not committed to GitHub). The app may sleep after 12 hours of inactivity; first visit after sleep takes 1–2 minutes to wake.
 
 ---
 
@@ -123,4 +123,4 @@ Future work could add persistent incident storage, stronger retry policies, and 
 - [x] Public GitHub repository  
 - [x] Internet-accessible live deployment  
 - [x] Written report (this document, 1–2 pages)  
-- [x] Presentation-ready demo at http://44.192.117.195
+- [x] Presentation-ready demo on Streamlit Cloud (see live link above)

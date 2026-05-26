@@ -78,10 +78,9 @@ flowchart LR
 | **Security** | Mask secrets, flag destructive steps, sanitize output | Rules + LLM output pass-through |
 
 **Communication pattern:** shared `AgentState` passed through LangGraph nodes (orchestration layer).  
-**Deployment:** AWS EC2 — live demo at **http://44.192.117.195**
+**Deployment:** https://ai-incident-resolution-agent.streamlit.app/
 
-**Assignment submission (1–2 pages):** [docs/SUBMISSION_REPORT.md](docs/SUBMISSION_REPORT.md)  
-Extended technical write-up: [docs/ASSIGNMENT_REPORT.md](docs/ASSIGNMENT_REPORT.md)
+**Documentation (1–2 pages):** [docs/SUBMISSION_REPORT.md](docs/SUBMISSION_REPORT.md)  
 
 ## Sample prompts
 
@@ -189,8 +188,6 @@ pytest tests/test_agents.py -v
 Markdown runbooks in `knowledge_base/docs/` are chunked and indexed into `chroma_db/` (gitignored) on first search. First request may take longer while the embedding model loads.
 
 ## Deployment
-
-Step-by-step guide: **[docs/DEPLOY.md](docs/DEPLOY.md)**
 
 ### Streamlit Community Cloud (recommended — single app)
 
