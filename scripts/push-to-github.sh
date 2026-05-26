@@ -24,7 +24,30 @@ git status
 if git diff --cached --quiet; then
   echo "Nothing to commit."
 else
-  git commit -m "${COMMIT_MSG:-Deploy: AI incident resolution agent}"
+  # Generate dynamic commit message based on changed files
+  if [[ -z "${COMMIT_MSG:-}" ]]; then
+    CHANGED_FILES=$(git diff --cached --name-only)
+    MODULES=()
+    
+    # Detect which modules/areas have changes
+    [[ "$CHANGED_FILES" =~ agents/ ]] && MODULES+=("agents")
+    [[ "$CHANGED_FILES" =~ api/ ]] && MODULES+=("api")
+    [[ "$CHANGED_FILES" =~ ui/ ]] && MODULES+=("ui")
+    [[ "$CHANGED_FILES" =~ graph/ ]] && MODULES+=("graph")
+    [[ "$CHANGED_FILES" =~ knowledge_base/ ]] && MODULES+=("knowledge_base")
+    [[ "$CHANGED_FILES" =~ docs/ ]] && MODULES+=("docs")
+    [[ "$CHANGED_FILES" =~ tests/ ]] && MODULES+=("tests")
+    [[ "$CHANGED_FILES" =~ streamlit_app.py ]] && MODULES+=("streamlit")
+    
+    if [[ ${#MODULES[@]} -gt 0 ]]; then
+      MODULE_LIST=$(IFS=, ; echo "${MODULES[*]}")
+      COMMIT_MSG="Update: ${MODULE_LIST}"
+    else
+      COMMIT_MSG="Deploy: AI incident resolution agent"
+    fi
+  fi
+  
+  git commit -m "$COMMIT_MSG"
 fi
 
 if git remote get-url origin >/dev/null 2>&1; then
