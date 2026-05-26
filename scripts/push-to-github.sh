@@ -37,13 +37,19 @@ else
     [[ "$CHANGED_FILES" =~ knowledge_base/ ]] && MODULES+=("knowledge_base")
     [[ "$CHANGED_FILES" =~ docs/ ]] && MODULES+=("docs")
     [[ "$CHANGED_FILES" =~ tests/ ]] && MODULES+=("tests")
+    [[ "$CHANGED_FILES" =~ deploy/ ]] && MODULES+=("deploy")
+    [[ "$CHANGED_FILES" =~ scripts/ ]] && MODULES+=("scripts")
     [[ "$CHANGED_FILES" =~ streamlit_app.py ]] && MODULES+=("streamlit")
+    [[ "$CHANGED_FILES" =~ requirements.txt ]] && MODULES+=("dependencies")
     
     if [[ ${#MODULES[@]} -gt 0 ]]; then
       MODULE_LIST=$(IFS=, ; echo "${MODULES[*]}")
       COMMIT_MSG="Update: ${MODULE_LIST}"
     else
-      COMMIT_MSG="Deploy: AI incident resolution agent"
+      # Show actual files changed if no module matches
+      FILE_COUNT=$(echo "$CHANGED_FILES" | wc -l | tr -d ' ')
+      FIRST_FILE=$(echo "$CHANGED_FILES" | head -1)
+      COMMIT_MSG="Update: ${FIRST_FILE} (+$((FILE_COUNT-1)) more)"
     fi
   fi
   
